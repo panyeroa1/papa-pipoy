@@ -10,14 +10,17 @@ import { LoveSong, getRandomSongByMood, getSongByTitle, getRandomSong } from './
 import { 
   RadioAsset, 
   BGM_TRACKS, 
+  PAPA_ALDO_BGM,
   STINGERS, 
   FLOATERS, 
   STATION_IDS,
   getCurrentTimeForRadio, 
   getTimePeriod,
   getCallerVoice,
-  getRandomBGM
+  getRandomBGM,
+  getRandomPapaAldoBGM
 } from './radio-assets';
+import { useTools } from './state';
 
 /**
  * Audio Player State Store
@@ -119,10 +122,16 @@ export const useAudioPlayer = create<AudioPlayerState>((set, get) => ({
   // BGM actions
   playBGM: (trackName, volume = 30) => {
     let track: RadioAsset;
+    const template = useTools.getState().template;
+    
+    // Use Papa Aldo's BGM if that persona is active
+    const bgmList = template === 'papa-aldo' ? PAPA_ALDO_BGM : BGM_TRACKS;
+    const randomBGMFunc = template === 'papa-aldo' ? getRandomPapaAldoBGM : getRandomBGM;
+    
     if (trackName) {
-      track = BGM_TRACKS.find(t => t.name.toLowerCase().includes(trackName.toLowerCase())) || getRandomBGM();
+      track = bgmList.find(t => t.name.toLowerCase().includes(trackName.toLowerCase())) || randomBGMFunc();
     } else {
-      track = getRandomBGM();
+      track = randomBGMFunc();
     }
     set({ currentBGM: track, isBGMPlaying: true, bgmVolume: volume });
     return track;

@@ -49,6 +49,29 @@ export const BGM_TRACKS: RadioAsset[] = [
 ];
 
 /**
+ * Papa Aldo's BGM - Storytelling background music
+ * Located in /bgm folder (Paalam Mahal, Safe Here)
+ */
+export const PAPA_ALDO_BGM: RadioAsset[] = [
+  {
+    id: 'bgm-paalam-mahal',
+    name: 'Paalam, Mahal',
+    type: 'bgm',
+    audioPath: '/bgm/Paalam, Mahal.mp3',
+    duration: 180,
+    description: 'Emotional piano for Papa Aldo storytelling'
+  },
+  {
+    id: 'bgm-safe-here',
+    name: 'Safe Here',
+    type: 'bgm',
+    audioPath: '/bgm/Safe Here.mp3',
+    duration: 220,
+    description: 'Soft, ambient background for immersive narration'
+  }
+];
+
+/**
  * Radio Stingers - Short audio clips for transitions
  */
 export const STINGERS: RadioAsset[] = [
@@ -163,6 +186,13 @@ export function getAssetsByType(type: RadioAsset['type']): RadioAsset[] {
  */
 export function getRandomBGM(): RadioAsset {
   return BGM_TRACKS[Math.floor(Math.random() * BGM_TRACKS.length)];
+}
+
+/**
+ * Get a random Papa Aldo BGM track
+ */
+export function getRandomPapaAldoBGM(): RadioAsset {
+  return PAPA_ALDO_BGM[Math.floor(Math.random() * PAPA_ALDO_BGM.length)];
 }
 
 /**

@@ -638,7 +638,7 @@ export const useTools = create<{
       useSettings.getState().setVoice('Orus');
       useSettings.getState().setStyle('Radio DJ');
     } else if (template === 'papa-aldo') {
-      useSettings.getState().setVoice('Orus');
+      useSettings.getState().setVoice('Charon');
       useSettings.getState().setStyle('Storytelling');
     }
   },
