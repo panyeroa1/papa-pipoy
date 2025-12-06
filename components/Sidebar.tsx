@@ -200,6 +200,7 @@ export default function Sidebar() {
                   checked={googleSearch}
                   onChange={() => setGoogleSearch(!googleSearch)}
                   disabled={connected}
+                  aria-label="Use Google Search"
                 />
                 <span className="checkbox-visual"></span>
               </label>
