@@ -23,20 +23,28 @@ export interface RadioAsset {
  */
 export const BGM_TRACKS: RadioAsset[] = [
   {
-    id: 'bgm-paalam-mahal',
-    name: 'Paalam, Mahal',
+    id: 'bgm-promise-me',
+    name: 'Promise Me (Beverley Craven)',
     type: 'bgm',
-    audioPath: '/bgm/Paalam, Mahal.mp3',
-    duration: 180,
+    audioPath: '/playlist/Beverley Craven - Promise Me (Live at Birmingham Symphony Hall 1992).mp3',
+    duration: 210,
     description: 'Emotional background music for hugot segments'
   },
   {
-    id: 'bgm-safe-here',
-    name: 'Safe Here',
+    id: 'bgm-arthur-theme',
+    name: 'Arthur\'s Theme',
     type: 'bgm',
-    audioPath: '/bgm/Safe Here.mp3',
-    duration: 220,
+    audioPath: '/playlist/Christopher Cross - Arthur\'s Theme (Best That You Can Do) (Official Music Video) [Remastered HD].mp3',
+    duration: 240,
     description: 'Soft, comforting background music for advice segments'
+  },
+  {
+    id: 'bgm-old-photographs',
+    name: 'Old Photographs',
+    type: 'bgm',
+    audioPath: '/playlist/Jim Capaldi - Old Photographs (Official Lyric Video).mp3',
+    duration: 230,
+    description: 'Nostalgic background music'
   }
 ];
 
