@@ -1,7 +1,7 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
-*/
+ */
 /**
  * Copyright 2024 Google LLC
  *
@@ -25,6 +25,7 @@ import { AudioStreamer } from '../../lib/audio-streamer';
 import { audioContext } from '../../lib/utils';
 import VolMeterWorket from '../../lib/worklets/vol-meter';
 import { useLogStore, useSettings } from '@/lib/state';
+import { handleLoveSongToolCall } from '@/lib/audio-player-state';
 
 export type UseLiveApiResults = {
   client: GenAILiveClient;
@@ -101,6 +102,8 @@ export function useLiveApi({
     const onToolCall = (toolCall: LiveServerToolCall) => {
       const functionResponses: any[] = [];
 
+      const LOVE_SONG_TOOLS = ['play_love_song', 'play_song_by_title', 'stop_song', 'get_now_playing', 'set_volume'];
+
       for (const fc of toolCall.functionCalls) {
         // Log the function call trigger
         const triggerMessage = `Triggering function call: **${
@@ -112,11 +115,21 @@ export function useLiveApi({
           isFinal: true,
         });
 
+        // Handle love song tools specially
+        let response: any;
+        if (LOVE_SONG_TOOLS.includes(fc.name)) {
+          const result = handleLoveSongToolCall(fc.name, fc.args || {});
+          response = { result: result.result };
+        } else {
+          // Default response for other tools
+          response = { result: 'ok' };
+        }
+
         // Prepare the response
         functionResponses.push({
           id: fc.id,
           name: fc.name,
-          response: { result: 'ok' }, // simple, hard-coded function response
+          response,
         });
       }
 

@@ -2,7 +2,7 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
-*/
+ */
 /**
  * Copyright 2024 Google LLC
  *
@@ -23,10 +23,13 @@ import { useEffect, useState } from 'react';
 import ControlTray from './components/console/control-tray/ControlTray';
 import ErrorScreen from './components/demo/ErrorScreen';
 import StreamingConsole from './components/demo/streaming-console/StreamingConsole';
+import AudioPlayer from './components/AudioPlayer';
+import BGMPlayer from './components/BGMPlayer';
 
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import { LiveAPIProvider } from './contexts/LiveAPIContext';
+import { useAudioPlayer } from './lib/audio-player-state';
 
 declare global {
   interface AIStudio {
@@ -45,6 +48,10 @@ declare global {
  */
 function App() {
   const [apiKeySet, setApiKeySet] = useState(false);
+  const { 
+    currentSong, isPlaying, volume, stopSong, onSongEnded,
+    currentBGM, isBGMPlaying, bgmVolume, stopBGM
+  } = useAudioPlayer();
 
   useEffect(() => {
     const checkKey = async () => {
@@ -178,10 +185,26 @@ function App() {
           <main>
             <div className="main-app-area">
               <StreamingConsole />
+              {currentSong && (
+                <AudioPlayer
+                  song={currentSong}
+                  isPlaying={isPlaying}
+                  volume={volume}
+                  onEnded={onSongEnded}
+                  onStop={stopSong}
+                />
+              )}
             </div>
             <ControlTray />
           </main>
         </div>
+        {/* BGM Player - fixed position bottom right */}
+        <BGMPlayer
+          bgm={currentBGM}
+          isPlaying={isBGMPlaying}
+          volume={bgmVolume}
+          onEnded={stopBGM}
+        />
       </LiveAPIProvider>
     </div>
   );

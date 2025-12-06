@@ -7,6 +7,7 @@ import { create } from 'zustand';
 import { customerSupportTools } from './tools/customer-support';
 import { personalAssistantTools } from './tools/personal-assistant';
 import { navigationSystemTools } from './tools/navigation-system';
+import { papapPipoyTools } from './tools/papap-pipoy';
 import { DEFAULT_LIVE_API_MODEL, DEFAULT_VOICE } from './constants';
 import { PAPAP_SCHEDULE_JSON } from './papap-schedule';
 import {
@@ -22,7 +23,7 @@ const toolsets: Record<Template, FunctionCall[]> = {
   'personal-assistant': personalAssistantTools,
   'navigation-system': navigationSystemTools,
   'leo': customerSupportTools,
-  'papap-pipoy': customerSupportTools, // Can share tools or have none
+  'papap-pipoy': papapPipoyTools,
 };
 
 const systemPrompts: Record<Template, string> = {
