@@ -81,11 +81,11 @@ export default function BGMPlayer({ bgm, isPlaying, volume, onEnded }: BGMPlayer
           position: fixed;
           bottom: 100px;
           right: 20px;
-          background: linear-gradient(135deg, rgba(30, 30, 40, 0.95) 0%, rgba(20, 20, 30, 0.95) 100%);
-          border: 1px solid var(--Neutral-30);
-          border-radius: 8px;
-          padding: 8px 12px;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+          background: linear-gradient(145deg, rgba(12, 16, 32, 0.92) 0%, rgba(9, 12, 26, 0.88) 100%);
+          border: 1px solid var(--orbitz-border);
+          border-radius: 10px;
+          padding: 10px 14px;
+          box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04);
           z-index: 1000;
           backdrop-filter: blur(10px);
         }
@@ -97,13 +97,14 @@ export default function BGMPlayer({ bgm, isPlaying, volume, onEnded }: BGMPlayer
         }
         
         .bgm-player-icon {
-          width: 28px;
-          height: 28px;
-          background: linear-gradient(135deg, var(--Purple-500) 0%, var(--Blue-500) 100%);
+          width: 30px;
+          height: 30px;
+          background: linear-gradient(135deg, var(--accent-blue) 0%, var(--orbitz-pink) 100%);
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
+          box-shadow: 0 0 20px rgba(125, 243, 255, 0.25);
         }
         
         .bgm-player-icon .icon {

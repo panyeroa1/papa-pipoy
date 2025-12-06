@@ -37,30 +37,30 @@ export const LOVE_SONGS: LoveSong[] = [
     title: 'Emotional Piano',
     artist: 'Pixabay',
     mood: 'hugot',
-    audioUrl: 'https://cdn.pixabay.com/audio/2022/03/15/audio_115b9cfa04.mp3',
-    duration: 136,
-    source: 'Pixabay',
-    license: 'Pixabay License'
+    audioUrl: '/bgm/Paalam, Mahal.mp3',
+    duration: 180,
+    source: 'Local Placeholder',
+    license: 'Placeholder'
   },
   {
     id: 'hugot-2',
     title: 'Sad Soul',
     artist: 'Pixabay',
     mood: 'hugot',
-    audioUrl: 'https://cdn.pixabay.com/audio/2022/08/02/audio_884fe92c21.mp3',
-    duration: 165,
-    source: 'Pixabay',
-    license: 'Pixabay License'
+    audioUrl: '/bgm/Safe Here.mp3',
+    duration: 220,
+    source: 'Local Placeholder',
+    license: 'Placeholder'
   },
   {
     id: 'hugot-3',
     title: 'Melancholy',
     artist: 'Pixabay',
     mood: 'hugot',
-    audioUrl: 'https://cdn.pixabay.com/audio/2022/03/10/audio_c8c8a73467.mp3',
+    audioUrl: '/bgm/Paalam, Mahal.mp3',
     duration: 180,
-    source: 'Pixabay',
-    license: 'Pixabay License'
+    source: 'Local Placeholder',
+    license: 'Placeholder'
   },
 
   // Kilig / Romantic Songs
@@ -69,30 +69,30 @@ export const LOVE_SONGS: LoveSong[] = [
     title: 'Romantic Love',
     artist: 'Pixabay',
     mood: 'kilig',
-    audioUrl: 'https://cdn.pixabay.com/audio/2022/01/18/audio_d0a13f69d2.mp3',
-    duration: 132,
-    source: 'Pixabay',
-    license: 'Pixabay License'
+    audioUrl: '/bgm/Safe Here.mp3',
+    duration: 220,
+    source: 'Local Placeholder',
+    license: 'Placeholder'
   },
   {
     id: 'kilig-2',
     title: 'Sweet Romance',
     artist: 'Pixabay',
     mood: 'kilig',
-    audioUrl: 'https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3',
-    duration: 156,
-    source: 'Pixabay',
-    license: 'Pixabay License'
+    audioUrl: '/bgm/Paalam, Mahal.mp3',
+    duration: 180,
+    source: 'Local Placeholder',
+    license: 'Placeholder'
   },
   {
     id: 'kilig-3',
     title: 'Love Story',
     artist: 'Pixabay',
     mood: 'kilig',
-    audioUrl: 'https://cdn.pixabay.com/audio/2021/11/25/audio_91b32e02f9.mp3',
-    duration: 145,
-    source: 'Pixabay',
-    license: 'Pixabay License'
+    audioUrl: '/bgm/Safe Here.mp3',
+    duration: 220,
+    source: 'Local Placeholder',
+    license: 'Placeholder'
   },
 
   // Chill / Relaxed Love Songs
@@ -101,10 +101,10 @@ export const LOVE_SONGS: LoveSong[] = [
     title: 'Lofi Chill',
     artist: 'Pixabay',
     mood: 'chill',
-    audioUrl: 'https://cdn.pixabay.com/audio/2022/05/17/audio_69a61cd6d6.mp3',
-    duration: 147,
-    source: 'Pixabay',
-    license: 'Pixabay License'
+    audioUrl: '/bgm/Paalam, Mahal.mp3',
+    duration: 180,
+    source: 'Local Placeholder',
+    license: 'Placeholder'
   },
   {
     id: 'chill-2',

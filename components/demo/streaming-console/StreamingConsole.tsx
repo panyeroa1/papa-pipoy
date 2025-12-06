@@ -18,6 +18,7 @@ import {
 } from '@/lib/state';
 import { checkCorrection } from '@/lib/supervisor';
 import { chokeTime_1Hour_Format } from '@/lib/papap-schedule';
+import { onceUponALoveStory_Format } from '@/lib/once-upon-a-love-story-schedule';
 
 const formatTimestamp = (date: Date) => {
   const pad = (num: number, size = 2) => num.toString().padStart(size, '0');
@@ -109,6 +110,13 @@ export default function StreamingConsole() {
          client.send([{ 
            text: `[SYSTEM: Start the radio show immediately. Execute BLOCK 0: ${startBlock.description}. Function calls: ${JSON.stringify(startBlock.calls)}]` 
          }]);
+      } else if (template === 'papa-aldo') {
+         // Auto-start Papa Aldo show
+         isShowRunningRef.current = true;
+         const startBlock = onceUponALoveStory_Format[0];
+         client.send([{ 
+           text: `[SYSTEM: Start the storytelling show immediately. Execute BLOCK 0: ${startBlock.description}. Function calls: ${JSON.stringify(startBlock.calls)}]` 
+         }]);
       } else {
          // Standard greeting for other personas
          client.send([{ text: `[SYSTEM: Phone connected. Answer naturally with "Hello?".]` }]);
@@ -128,8 +136,8 @@ export default function StreamingConsole() {
     const interval = setInterval(() => {
       if (!connected) return;
       
-      // SKIP standard silence logic if running the Papap Pipoy Radio Show
-      if (template === 'papap-pipoy') return;
+      // SKIP standard silence logic if running a Radio Show
+      if (template === 'papap-pipoy' || template === 'papa-aldo') return;
 
       const timeSinceActivity = Date.now() - lastActivityRef.current;
       const currentTurns = useLogStore.getState().turns;
@@ -342,7 +350,7 @@ export default function StreamingConsole() {
       }
 
       // SHOW RUNNER: AUTO-CONTINUE LOGIC
-      if (template === 'papap-pipoy' && isShowRunningRef.current) {
+      if ((template === 'papap-pipoy' || template === 'papa-aldo') && isShowRunningRef.current) {
         // Wait a small buffer (e.g. 2s) then trigger next block
         if (turnCompletionTimerRef.current) clearTimeout(turnCompletionTimerRef.current);
         
@@ -351,9 +359,11 @@ export default function StreamingConsole() {
 
           // Increment Schedule
           const nextIndex = currentScheduleIndexRef.current + 1;
-          if (nextIndex < chokeTime_1Hour_Format.length) {
+          const schedule = template === 'papa-aldo' ? onceUponALoveStory_Format : chokeTime_1Hour_Format;
+          if (nextIndex < schedule.length) {
             currentScheduleIndexRef.current = nextIndex;
-            const block = chokeTime_1Hour_Format[nextIndex];
+            const schedule = template === 'papa-aldo' ? onceUponALoveStory_Format : chokeTime_1Hour_Format;
+            const block = schedule[nextIndex];
             
             client.send([{ 
               text: `[SYSTEM: Previous segment complete. Proceeding to BLOCK ${nextIndex}: ${block.description}. Execute the following calls: ${JSON.stringify(block.calls)}]` 

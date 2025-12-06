@@ -176,14 +176,45 @@ function App() {
   const API_KEY = process.env.API_KEY as string || "";
 
   return (
-    <div className="App">
+    <div className="App orbitz-shell">
+      <div className="orbitz-backdrop" aria-hidden="true">
+        <div className="orbitz-ring ring-1" />
+        <div className="orbitz-ring ring-2" />
+        <div className="orbitz-ring ring-3" />
+      </div>
       <LiveAPIProvider apiKey={API_KEY}>
         <ErrorScreen />
         <Header />
         <Sidebar />
-        <div className="streaming-console">
+        <div className="streaming-console orbitz-console">
           <main>
-            <div className="main-app-area">
+            <section className="broadcast-hud">
+              <div className="hud-left">
+                <div className="hud-badge">
+                  <span className="hud-frequency">101.8</span>
+                  <div className="hud-labels">
+                    <span className="hud-callout">Orbitz Radio</span>
+                    <span className="hud-sub">Papap Pipoy • Night Shift Advice</span>
+                  </div>
+                </div>
+                <p className="hud-copy">Tough love, neon soul, and late-night requests from the Orbit Control deck.</p>
+              </div>
+              <div className="hud-right">
+                <div className="hud-pills">
+                  <span className="chip live">On Air</span>
+                  <span className="chip outline">Requests Open</span>
+                </div>
+                <div className="hud-visualizer" aria-hidden="true">
+                  <span className="wave" />
+                  <span className="wave" />
+                  <span className="wave" />
+                  <span className="wave" />
+                  <span className="wave" />
+                  <span className="wave" />
+                </div>
+              </div>
+            </section>
+            <div className="main-app-area orbitz-panel">
               <StreamingConsole />
               {currentSong && (
                 <AudioPlayer

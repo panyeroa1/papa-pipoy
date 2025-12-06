@@ -4,6 +4,8 @@
  */
 
 import { create } from 'zustand';
+
+import { useSettings } from './state';
 import { LoveSong, getRandomSongByMood, getSongByTitle, getRandomSong } from './love-songs-data';
 import { 
   RadioAsset, 
@@ -299,6 +301,7 @@ export function handleLoveSongToolCall(
     }
 
     // === CALLER TOOLS ===
+
     case 'simulate_caller': {
       const callerName = args.callerName as string;
       const gender = args.gender as 'male' | 'female';
@@ -307,6 +310,10 @@ export function handleLoveSongToolCall(
       
       const caller = { name: callerName, gender, voice, scenario };
       audioPlayer.setCaller(caller);
+
+      // VOICE SWITCHING LOGIC
+      useSettings.getState().setVoice(voice);
+      useSettings.getState().setStyle('Phone Call');
       
       return { 
         result: `Caller "${callerName}" joining. Voice: ${voice}. Scenario: ${scenario}. SWITCH TO ${voice.toUpperCase()} VOICE NOW.`,
@@ -317,6 +324,11 @@ export function handleLoveSongToolCall(
     case 'end_caller': {
       const closingMessage = args.closingMessage as string || 'Thank you for calling in.';
       audioPlayer.clearCaller();
+
+      // VOICE REVERT LOGIC
+      useSettings.getState().setVoice('Orus');
+      useSettings.getState().setStyle('Radio DJ');
+
       return { 
         result: `Caller segment ended. "${closingMessage}" SWITCH BACK TO ORUS (Papap Pipoy) VOICE.`,
         data: { closingMessage }

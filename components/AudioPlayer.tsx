@@ -24,6 +24,15 @@ export default function AudioPlayer({ song, isPlaying, volume, onEnded, onStop }
   const [duration, setDuration] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const progressBarRef = useRef<HTMLDivElement>(null);
+
+  // Update progress bar width directly to avoid inline style warnings
+  useEffect(() => {
+    if (progressBarRef.current) {
+      const percentage = (currentTime / (duration || song.duration)) * 100;
+      progressBarRef.current.style.setProperty('--progress-width', `${percentage}%`);
+    }
+  }, [currentTime, duration, song.duration]);
 
   // Handle play/pause
   useEffect(() => {
@@ -122,8 +131,8 @@ export default function AudioPlayer({ song, isPlaying, volume, onEnded, onStop }
       
       <div className="audio-player-progress">
         <div 
+          ref={progressBarRef}
           className="audio-player-progress-bar"
-          style={{ width: `${(currentTime / (duration || song.duration)) * 100}%` }}
         />
       </div>
       
@@ -134,12 +143,13 @@ export default function AudioPlayer({ song, isPlaying, volume, onEnded, onStop }
 
       <style>{`
         .audio-player {
-          background: linear-gradient(135deg, var(--Neutral-15) 0%, var(--Neutral-10) 100%);
-          border: 1px solid var(--Neutral-30);
-          border-radius: 12px;
+          background: linear-gradient(140deg, rgba(13, 18, 36, 0.9) 0%, rgba(12, 16, 32, 0.82) 100%);
+          border: 1px solid var(--orbitz-border);
+          border-radius: 14px;
           padding: 16px;
           margin: 12px 0;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+          backdrop-filter: blur(8px);
         }
         
         .audio-player-content {
@@ -149,14 +159,15 @@ export default function AudioPlayer({ song, isPlaying, volume, onEnded, onStop }
         }
         
         .audio-player-icon {
-          width: 48px;
-          height: 48px;
-          background: linear-gradient(135deg, var(--Blue-500) 0%, var(--Purple-500) 100%);
+          width: 52px;
+          height: 52px;
+          background: linear-gradient(135deg, var(--accent-blue) 0%, var(--orbitz-pink) 100%);
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
+          box-shadow: 0 0 25px rgba(125, 243, 255, 0.35);
         }
         
         .audio-player-icon .icon {
@@ -223,7 +234,7 @@ export default function AudioPlayer({ song, isPlaying, volume, onEnded, onStop }
           width: 36px;
           height: 36px;
           border-radius: 50%;
-          background: var(--Red-700);
+          background: linear-gradient(140deg, rgba(255, 111, 97, 0.9), rgba(255, 184, 105, 0.85));
           border: none;
           cursor: pointer;
           display: flex;
@@ -233,7 +244,7 @@ export default function AudioPlayer({ song, isPlaying, volume, onEnded, onStop }
         }
         
         .audio-player-stop:hover {
-          background: var(--Red-500);
+          background: linear-gradient(140deg, rgba(255, 111, 97, 1), rgba(255, 184, 105, 0.95));
         }
         
         .audio-player-stop .icon {
@@ -243,7 +254,7 @@ export default function AudioPlayer({ song, isPlaying, volume, onEnded, onStop }
         
         .audio-player-progress {
           height: 4px;
-          background: var(--Neutral-30);
+          background: rgba(125, 243, 255, 0.15);
           border-radius: 2px;
           margin-top: 12px;
           overflow: hidden;
@@ -251,9 +262,11 @@ export default function AudioPlayer({ song, isPlaying, volume, onEnded, onStop }
         
         .audio-player-progress-bar {
           height: 100%;
-          background: linear-gradient(90deg, var(--Blue-500) 0%, var(--Purple-500) 100%);
+          background: linear-gradient(90deg, var(--accent-blue) 0%, var(--orbitz-pink) 60%, var(--orbitz-amber) 100%);
           border-radius: 2px;
           transition: width 0.2s linear;
+          width: var(--progress-width, 0%);
+          box-shadow: 0 0 18px rgba(125, 243, 255, 0.35);
         }
         
         .audio-player-meta {
