@@ -31,164 +31,74 @@ export interface LoveSong {
  * These URLs are direct audio links that should work reliably
  */
 export const LOVE_SONGS: LoveSong[] = [
-  // Hugot / Emotional Songs
+  // Hugot / Emotional Songs (Beverley Craven)
   {
-    id: 'hugot-1',
-    title: 'Emotional Piano',
-    artist: 'Pixabay',
+    id: 'hugot-local-1',
+    title: 'Promise Me',
+    artist: 'Beverley Craven',
     mood: 'hugot',
-    audioUrl: '/bgm/Paalam, Mahal.mp3',
-    duration: 180,
-    source: 'Local Placeholder',
-    license: 'Placeholder'
+    audioUrl: '/playlist/Beverley Craven - Promise Me (Live at Birmingham Symphony Hall 1992).mp3',
+    duration: 210, // Approx 3:30
+    source: 'Local Playlist',
+    license: 'Local'
   },
+  
+  // Kilig / Romantic Songs (Christopher Cross, David Foster)
   {
-    id: 'hugot-2',
-    title: 'Sad Soul',
-    artist: 'Pixabay',
-    mood: 'hugot',
-    audioUrl: '/bgm/Safe Here.mp3',
-    duration: 220,
-    source: 'Local Placeholder',
-    license: 'Placeholder'
-  },
-  {
-    id: 'hugot-3',
-    title: 'Melancholy',
-    artist: 'Pixabay',
-    mood: 'hugot',
-    audioUrl: '/bgm/Paalam, Mahal.mp3',
-    duration: 180,
-    source: 'Local Placeholder',
-    license: 'Placeholder'
-  },
-
-  // Kilig / Romantic Songs
-  {
-    id: 'kilig-1',
-    title: 'Romantic Love',
-    artist: 'Pixabay',
+    id: 'kilig-local-1',
+    title: 'Arthur\'s Theme (Best That You Can Do)',
+    artist: 'Christopher Cross',
     mood: 'kilig',
-    audioUrl: '/bgm/Safe Here.mp3',
-    duration: 220,
-    source: 'Local Placeholder',
-    license: 'Placeholder'
+    audioUrl: '/playlist/Christopher Cross - Arthur\'s Theme (Best That You Can Do) (Official Music Video) [Remastered HD].mp3',
+    duration: 240, // Approx 4:00
+    source: 'Local Playlist',
+    license: 'Local'
   },
   {
-    id: 'kilig-2',
-    title: 'Sweet Romance',
-    artist: 'Pixabay',
+    id: 'kilig-local-2',
+    title: 'The Best Of Me',
+    artist: 'David Foster & Olivia Newton-John',
     mood: 'kilig',
-    audioUrl: '/bgm/Paalam, Mahal.mp3',
-    duration: 180,
-    source: 'Local Placeholder',
-    license: 'Placeholder'
-  },
-  {
-    id: 'kilig-3',
-    title: 'Love Story',
-    artist: 'Pixabay',
-    mood: 'kilig',
-    audioUrl: '/bgm/Safe Here.mp3',
-    duration: 220,
-    source: 'Local Placeholder',
-    license: 'Placeholder'
+    audioUrl: '/playlist/David Foster and Olivia Newton-John - The Best Of Me (Official Music Video).mp3',
+    duration: 245, // Approx 4:05
+    source: 'Local Playlist',
+    license: 'Local'
   },
 
-  // Chill / Relaxed Love Songs
+  // Chill / Relaxed Love Songs (Jim Capaldi)
   {
-    id: 'chill-1',
-    title: 'Lofi Chill',
-    artist: 'Pixabay',
+    id: 'chill-local-1',
+    title: 'Old Photographs',
+    artist: 'Jim Capaldi',
     mood: 'chill',
-    audioUrl: '/bgm/Paalam, Mahal.mp3',
-    duration: 180,
-    source: 'Local Placeholder',
-    license: 'Placeholder'
-  },
-  {
-    id: 'chill-2',
-    title: 'Relaxing Acoustic',
-    artist: 'Pixabay',
-    mood: 'chill',
-    audioUrl: 'https://cdn.pixabay.com/audio/2022/10/25/audio_946b0939c8.mp3',
-    duration: 160,
-    source: 'Pixabay',
-    license: 'Pixabay License'
-  },
-  {
-    id: 'chill-3',
-    title: 'Calm Evening',
-    artist: 'Pixabay',
-    mood: 'chill',
-    audioUrl: 'https://cdn.pixabay.com/audio/2022/08/04/audio_2dde668d05.mp3',
-    duration: 174,
-    source: 'Pixabay',
-    license: 'Pixabay License'
+    audioUrl: '/playlist/Jim Capaldi - Old Photographs (Official Lyric Video).mp3',
+    duration: 230, // Approx 3:50
+    source: 'Local Playlist',
+    license: 'Local'
   },
 
-  // Hopeful / Uplifting Love Songs
+  // Throwback / Classic Style (Simply Red)
   {
-    id: 'hopeful-1',
-    title: 'Inspiring Moments',
-    artist: 'Pixabay',
-    mood: 'hopeful',
-    audioUrl: 'https://cdn.pixabay.com/audio/2022/02/22/audio_d1718ab41b.mp3',
-    duration: 152,
-    source: 'Pixabay',
-    license: 'Pixabay License'
-  },
-  {
-    id: 'hopeful-2',
-    title: 'New Day',
-    artist: 'Pixabay',
-    mood: 'hopeful',
-    audioUrl: 'https://cdn.pixabay.com/audio/2021/08/04/audio_0625c1539c.mp3',
-    duration: 129,
-    source: 'Pixabay',
-    license: 'Pixabay License'
-  },
-  {
-    id: 'hopeful-3',
-    title: 'Beautiful Life',
-    artist: 'Pixabay',
-    mood: 'hopeful',
-    audioUrl: 'https://cdn.pixabay.com/audio/2022/03/24/audio_4da6a87d7c.mp3',
-    duration: 144,
-    source: 'Pixabay',
-    license: 'Pixabay License'
+    id: 'throwback-local-1',
+    title: 'You Make Me Feel Brand New',
+    artist: 'Simply Red',
+    mood: 'throwback',
+    audioUrl: '/playlist/Simply Red - You Make Me Feel Brand New (Official Live at Sydney Opera House).mp3',
+    duration: 300, // Approx 5:00
+    source: 'Local Playlist',
+    license: 'Local'
   },
 
-  // Throwback / Classic Style
+  // Hopeful / Uplifting (Using Arthur's Theme as duplicate for now to fill category or use Paalam Mahal for filler)
   {
-    id: 'throwback-1',
-    title: 'Vintage Vibes',
-    artist: 'Pixabay',
-    mood: 'throwback',
-    audioUrl: 'https://cdn.pixabay.com/audio/2022/01/20/audio_8ba0cfb58c.mp3',
-    duration: 138,
-    source: 'Pixabay',
-    license: 'Pixabay License'
-  },
-  {
-    id: 'throwback-2',
-    title: 'Classic Mood',
-    artist: 'Pixabay',
-    mood: 'throwback',
-    audioUrl: 'https://cdn.pixabay.com/audio/2022/06/07/audio_b9bd4170e4.mp3',
-    duration: 165,
-    source: 'Pixabay',
-    license: 'Pixabay License'
-  },
-  {
-    id: 'throwback-3',
-    title: 'Nostalgic Dreams',
-    artist: 'Pixabay',
-    mood: 'throwback',
-    audioUrl: 'https://cdn.pixabay.com/audio/2021/12/16/audio_232a4baabd.mp3',
-    duration: 157,
-    source: 'Pixabay',
-    license: 'Pixabay License'
+    id: 'hopeful-local-1',
+    title: 'Arthur\'s Theme (Reprise)',
+    artist: 'Christopher Cross',
+    mood: 'hopeful',
+    audioUrl: '/playlist/Christopher Cross - Arthur\'s Theme (Best That You Can Do) (Official Music Video) [Remastered HD].mp3',
+    duration: 240,
+    source: 'Local Playlist',
+    license: 'Local'
   }
 ];
 
