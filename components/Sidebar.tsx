@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import { FunctionCall, useSettings, useUI, useTools, useSupervisor, useLogStore, Template } from '@/lib/state';
+import { useAudioPlayer } from '@/lib/audio-player-state';
 import c from 'classnames';
 import { DEFAULT_LIVE_API_MODEL, AVAILABLE_VOICES, AVAILABLE_STYLES } from '@/lib/constants';
 import { useLiveAPIContext } from '@/contexts/LiveAPIContext';
@@ -18,6 +19,7 @@ export default function Sidebar() {
   const { isSidebarOpen, toggleSidebar } = useUI();
   const { systemPrompt, model, voice, style, googleSearch, setSystemPrompt, setModel, setVoice, setStyle, setGoogleSearch } =
     useSettings();
+  const { volume, setVolume, bgmVolume, setBGMVolume } = useAudioPlayer();
   const { tools, toggleTool, addTool, removeTool, updateTool, template, setTemplate } = useTools();
   const { connected } = useLiveAPIContext();
   const { suggestions, removeSuggestion, acceptSuggestion, isAnalyzing, appliedCorrections } = useSupervisor();
@@ -193,6 +195,31 @@ export default function Sidebar() {
                 ))}
               </select>
             </label>
+            
+            <div className="sidebar-section-group">
+                <label style={{marginTop: '12px'}}>
+                  BGM Volume: {bgmVolume}%
+                  <input 
+                    type="range" 
+                    min="0" 
+                    max="100" 
+                    value={bgmVolume} 
+                    onChange={e => setBGMVolume(Number(e.target.value))}
+                    style={{width: '100%', marginTop: '4px'}}
+                  />
+                </label>
+                <label style={{marginTop: '8px'}}>
+                  Song Volume: {volume}%
+                  <input 
+                    type="range" 
+                    min="0" 
+                    max="100" 
+                    value={volume} 
+                    onChange={e => setVolume(Number(e.target.value))}
+                    style={{width: '100%', marginTop: '4px'}}
+                  />
+                </label>
+            </div>
             <div className="tool-item" style={{ marginTop: '8px' }}>
               <label className="tool-checkbox-wrapper">
                 <input
