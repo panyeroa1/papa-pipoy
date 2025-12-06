@@ -16,6 +16,7 @@ import {
   useSupervisor,
   ConversationTurn,
 } from '@/lib/state';
+import { useAudioPlayer } from '@/lib/audio-player-state';
 import { checkCorrection } from '@/lib/supervisor';
 import { chokeTime_1Hour_Format } from '@/lib/papap-schedule';
 import { onceUponALoveStory_Format } from '@/lib/once-upon-a-love-story-schedule';
@@ -201,7 +202,7 @@ export default function StreamingConsole() {
       .map(tool => ({
         name: tool.name,
         description: tool.description,
-        parameters: tool.parameters,
+        parameters: tool.parameters as any,
       }));
 
     const enabledTools: Tool[] = [];
@@ -350,35 +351,12 @@ export default function StreamingConsole() {
       }
 
       // SHOW RUNNER: AUTO-CONTINUE LOGIC
-      if ((template === 'papap-pipoy' || template === 'papa-aldo') && isShowRunningRef.current) {
-        // Wait a small buffer (e.g. 2s) then trigger next block
-        if (turnCompletionTimerRef.current) clearTimeout(turnCompletionTimerRef.current);
-        
-        turnCompletionTimerRef.current = setTimeout(() => {
-          if (!connected) return;
-
-          // Increment Schedule
-          const nextIndex = currentScheduleIndexRef.current + 1;
-          const schedule = template === 'papa-aldo' ? onceUponALoveStory_Format : chokeTime_1Hour_Format;
-          if (nextIndex < schedule.length) {
-            currentScheduleIndexRef.current = nextIndex;
-            const schedule = template === 'papa-aldo' ? onceUponALoveStory_Format : chokeTime_1Hour_Format;
-            const block = schedule[nextIndex];
-            
-            client.send([{ 
-              text: `[SYSTEM: Previous segment complete. Proceeding to BLOCK ${nextIndex}: ${block.description}. Execute the following calls: ${JSON.stringify(block.calls)}]` 
-            }]);
-            
-            useLogStore.getState().addTurn({
-              role: 'system',
-              text: `📻 Show Runner: Auto-advancing to Block ${nextIndex}`,
-              isFinal: true
-            });
-          } else {
-            // End of show
-            client.send([{ text: `[SYSTEM: Show complete. Sign off.]` }]);
-          }
-        }, 2000); // 2 second pause between segments
+      // Only auto-advance if NO song is playing.
+      // If a song is playing, the separate useEffect on `isPlaying` will handle the advance when it finishes.
+      const isSongPlaying = useAudioPlayer.getState().isPlaying;
+      
+      if ((template === 'papap-pipoy' || template === 'papa-aldo') && isShowRunningRef.current && !isSongPlaying) {
+        scheduleNextBlock();
       }
     };
 
@@ -394,6 +372,47 @@ export default function StreamingConsole() {
       client.off('turncomplete', handleTurnComplete);
     };
   }, [client, template, connected]);
+
+  // Helper to advance schedule
+  const scheduleNextBlock = () => {
+    if (turnCompletionTimerRef.current) clearTimeout(turnCompletionTimerRef.current);
+    
+    turnCompletionTimerRef.current = setTimeout(() => {
+      if (!connected) return;
+
+      // Increment Schedule
+      const nextIndex = currentScheduleIndexRef.current + 1;
+      const schedule = template === 'papa-aldo' ? onceUponALoveStory_Format : chokeTime_1Hour_Format;
+      if (nextIndex < schedule.length) {
+        currentScheduleIndexRef.current = nextIndex;
+        const block = schedule[nextIndex];
+        
+        client.send([{ 
+          text: `[SYSTEM: Previous segment complete. Proceeding to BLOCK ${nextIndex}: ${block.description}. Execute the following calls: ${JSON.stringify(block.calls)}]` 
+        }]);
+        
+        useLogStore.getState().addTurn({
+          role: 'system',
+          text: `📻 Show Runner: Auto-advancing to Block ${nextIndex}`,
+          isFinal: true
+        });
+      } else {
+        // End of show
+        client.send([{ text: `[SYSTEM: Show complete. Sign off.]` }]);
+      }
+    }, 2000); // 2 second pause between segments
+  };
+
+  // Listen for SONG ENDING to resume schedule
+  const isSongPlaying = useAudioPlayer(state => state.isPlaying);
+  
+  useEffect(() => {
+    // If song just stopped (playing -> false) AND show is running, advance schedule
+    if (!isSongPlaying && isShowRunningRef.current) {
+        // We use the same schedule helper
+        scheduleNextBlock();
+    }
+  }, [isSongPlaying]); // Dependency on isPlaying state
 
   useEffect(() => {
     if (scrollRef.current) {
