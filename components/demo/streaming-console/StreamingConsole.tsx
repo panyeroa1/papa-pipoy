@@ -57,7 +57,7 @@ const renderContent = (text: string) => {
 
 
 export default function StreamingConsole() {
-  const { client, setConfig, connected } = useLiveAPIContext();
+  const { client, setConfig, connected, setOutputVolume } = useLiveAPIContext();
   const { systemPrompt, voice, style, googleSearch, model } = useSettings();
   const { tools, template } = useTools();
   const turns = useLogStore(state => state.turns);
@@ -426,9 +426,63 @@ export default function StreamingConsole() {
     }
   }, [turns]);
 
+  // Volume Control Logic
+  const { volume: songVolume, setVolume: setSongVolume, bgmVolume, setBGMVolume } = useAudioPlayer();
+  const [voiceVolume, setVoiceVolume] = useState(1.0);
+
+  useEffect(() => {
+    if (setOutputVolume) {
+      setOutputVolume(voiceVolume);
+    }
+  }, [voiceVolume, setOutputVolume]);
+
   return (
     <div className="transcription-container">
       {showPopUp && <PopUp onClose={handleClosePopUp} />}
+      
+      {/* Volume Controls Toolbar */}
+      <div style={{
+         display: 'flex', 
+         justifyContent: 'center', 
+         gap: '2rem', 
+         padding: '10px', 
+         background: 'rgba(20, 20, 20, 0.9)', 
+         borderBottom: '1px solid #333',
+         color: '#eee',
+         fontSize: '0.8rem'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span>Voice</span>
+          <input 
+            type="range" min="0" max="1" step="0.05" 
+            aria-label="Voice Volume"
+            value={voiceVolume} 
+            onChange={(e) => setVoiceVolume(parseFloat(e.target.value))}
+            style={{ width: '80px', accentColor: '#4CAF50' }}
+          />
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span>BGM</span>
+          <input 
+            type="range" min="0" max="1" step="0.05" 
+            aria-label="Background Music Volume"
+            value={bgmVolume} 
+            onChange={(e) => setBGMVolume(parseFloat(e.target.value))}
+            style={{ width: '80px', accentColor: '#2196F3' }}
+          />
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span>Music</span>
+          <input 
+            type="range" min="0" max="1" step="0.05" 
+            aria-label="Music Volume"
+            value={songVolume} 
+            onChange={(e) => setSongVolume(parseFloat(e.target.value))}
+            style={{ width: '80px', accentColor: '#E91E63' }}
+          />
+        </div>
+      </div>
+
       {turns.length === 0 ? (
         <WelcomeScreen />
       ) : (

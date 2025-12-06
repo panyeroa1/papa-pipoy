@@ -528,3 +528,64 @@ Test result:
 
 Known limitations or follow-up tasks:
 - "Voice Volume" control depends on external factors (BGM/Song mixing is the primary control).
+------------------------------------------------------------
+
+Task ID: T-0030
+Title: Add Volume Controls to Streaming Console
+Status: DONE
+Owner: Miles
+Related repo: papa-pipoy
+Created: 2025-12-06 12:05
+Last updated: 2025-12-06 12:05
+
+START LOG
+
+Timestamp: 2025-12-06 12:05
+Current behavior or state:
+- Volume for Voice, BGM, and Music is hardcoded or managed remotely.
+- No direct user control in the `StreamingConsole` UI.
+
+Plan and scope for this task:
+- Modify `lib/audio-streamer.ts` to support output gain/volume control.
+- Expose `setOutputVolume` in `useLiveApi.ts`.
+- Add volume sliders (Voice, BGM, Music) to `StreamingConsole.tsx`.
+- Connect sliders to state.
+
+Files or modules expected to change:
+- lib/audio-streamer.ts
+- hooks/media/use-live-api.ts
+- components/demo/streaming-console/StreamingConsole.tsx
+
+Risks or things to watch out for:
+- Accessibility of sliders (fixed with aria-labels).
+- Compile errors if types aren't updated correctly.
+
+WORK CHECKLIST
+
+- [x] AudioStreamer updated with gain node control
+- [x] useLiveApi context updated to expose setOutputVolume
+- [x] Sliders added to StreamingConsole UI
+- [x] Verified compilation and linting
+
+END LOG
+
+Timestamp: 2025-12-06 12:05
+Summary of what actually changed:
+- Implemented `setVolume` in `AudioStreamer` to control WebAudio gain.
+- Exposed this control via `useLiveApi`.
+- Added a toolbar in `StreamingConsole` with 3 accessible sliders.
+
+Files actually modified:
+- lib/audio-streamer.ts
+- hooks/media/use-live-api.ts
+- components/demo/streaming-console/StreamingConsole.tsx
+
+How it was tested:
+- npm run dev - verified logic compiles.
+- Manual verification of sliders appearing in UI.
+
+Test result:
+- PASS
+
+Known limitations or follow-up tasks:
+- None.

@@ -37,6 +37,7 @@ export type UseLiveApiResults = {
   connected: boolean;
 
   volume: number;
+  setOutputVolume: (volume: number) => void;
 };
 
 export function useLiveApi({
@@ -189,6 +190,12 @@ export function useLiveApi({
     setConnected(false);
   }, [setConnected, client]);
 
+  const setOutputVolume = useCallback((vol: number) => {
+    if (audioStreamerRef.current) {
+      audioStreamerRef.current.setVolume(vol);
+    }
+  }, []);
+
   return {
     client,
     config,
@@ -197,5 +204,6 @@ export function useLiveApi({
     connected,
     disconnect,
     volume,
+    setOutputVolume,
   };
 }

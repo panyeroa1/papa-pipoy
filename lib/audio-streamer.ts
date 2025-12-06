@@ -41,11 +41,20 @@ export class AudioStreamer {
 
   public onComplete = () => {};
 
+  private outputVolume: number = 1.0;
+
   constructor(public context: AudioContext) {
     this.gainNode = this.context.createGain();
     this.source = this.context.createBufferSource();
     this.gainNode.connect(this.context.destination);
     this.addPCM16 = this.addPCM16.bind(this);
+  }
+
+  setVolume(volume: number) {
+    this.outputVolume = volume;
+    if (this.gainNode) {
+      this.gainNode.gain.setTargetAtTime(volume, this.context.currentTime, 0.02);
+    }
   }
 
   async addWorklet<T extends (d: any) => void>(
@@ -245,7 +254,7 @@ export class AudioStreamer {
     }
     this.isStreamComplete = false;
     this.scheduledTime = this.context.currentTime + this.initialBufferTime;
-    this.gainNode.gain.setValueAtTime(1, this.context.currentTime);
+    this.gainNode.gain.setValueAtTime(this.outputVolume, this.context.currentTime);
   }
 
   complete() {
