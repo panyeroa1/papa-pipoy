@@ -352,12 +352,18 @@ export default function StreamingConsole() {
 
       // SHOW RUNNER: AUTO-CONTINUE LOGIC
       // Only auto-advance if NO song is playing.
-      // If a song is playing, the separate useEffect on `isPlaying` will handle the advance when it finishes.
-      const isSongPlaying = useAudioPlayer.getState().isPlaying;
-      
-      if ((template === 'papap-pipoy' || template === 'papa-aldo') && isShowRunningRef.current && !isSongPlaying) {
-        scheduleNextBlock();
-      }
+      // We add a small delay to ensure the 'play_song' tool has time to update the store state
+      // preventing a race condition where we advance immediately after the agent announces the song.
+      const checkAndAdvance = () => {
+        const isSongPlaying = useAudioPlayer.getState().isPlaying;
+        
+        if ((template === 'papap-pipoy' || template === 'papa-aldo') && isShowRunningRef.current && !isSongPlaying) {
+          scheduleNextBlock();
+        }
+      };
+
+      // Wait 500ms before checking state to allow tool execution to propagate
+      setTimeout(checkAndAdvance, 500);
     };
 
     client.on('inputTranscription', handleInputTranscription);
