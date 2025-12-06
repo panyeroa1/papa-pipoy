@@ -75,7 +75,8 @@ export default function StreamingConsole() {
   // Show Runner Refs (Papap Pipoy Auto-Pilot)
   const currentScheduleIndexRef = useRef<number>(0);
   const isShowRunningRef = useRef<boolean>(false);
-  const turnCompletionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Use generic number or any to avoid NodeJS namespace issues in browser
+  const turnCompletionTimerRef = useRef<any>(null);
 
   // We need to access the API key to perform the supervisor check.
   const API_KEY = process.env.API_KEY as string;
@@ -218,8 +219,7 @@ export default function StreamingConsole() {
           },
         },
       },
-      // Use empty objects to enable transcription with default settings.
-      // Explicitly setting the model ID here can cause "invalid argument" errors with the preview model.
+      // Ensure transcription objects are empty if no config is needed
       inputAudioTranscription: {}, 
       outputAudioTranscription: {},
       // Send systemInstruction as a Content object to match schema
@@ -245,10 +245,6 @@ export default function StreamingConsole() {
       // If user speaks, we consider the initial silence broken
       initialSilenceRef.current = true;
       
-      // If user interrupts, we might need to pause the show runner logic, 
-      // but for "Papap Pipoy", we generally want to let the user speak then continue.
-      // For now, we leave the auto-pilot running to respond after the user finishes.
-
       const turns = useLogStore.getState().turns;
       const last = turns[turns.length - 1];
       if (last && last.role === 'user' && !last.isFinal) {
@@ -265,7 +261,8 @@ export default function StreamingConsole() {
       const updatedLast = updatedTurns[updatedTurns.length - 1];
       const fullUserText = (updatedLast && updatedLast.role === 'user') ? updatedLast.text : text;
 
-      if (isFinal && fullUserText.trim().length > 2) {
+      // Only check correction if API Key is valid and text is sufficient
+      if (isFinal && fullUserText.trim().length > 2 && API_KEY) {
         const currentPrompt = useSettings.getState().systemPrompt;
         
         setAnalyzing(true);
@@ -287,6 +284,7 @@ export default function StreamingConsole() {
                });
              }
           })
+          .catch(e => console.error("Supervisor Error:", e))
           .finally(() => setAnalyzing(false));
       }
     };

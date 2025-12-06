@@ -51,14 +51,22 @@ function App() {
       if (window.aistudio) {
         try {
           const hasKey = await window.aistudio.hasSelectedApiKey();
-          setApiKeySet(hasKey);
+          // Double check that process.env.API_KEY is actually populated if hasKey is true
+          if (hasKey && process.env.API_KEY) {
+            setApiKeySet(true);
+          } else {
+            setApiKeySet(false);
+          }
         } catch (e) {
           console.error("Error checking API key state:", e);
           setApiKeySet(false);
         }
       } else {
         // Fallback for non-AI Studio environments
-        setApiKeySet(true);
+        // We still check if process.env.API_KEY is available
+        if (process.env.API_KEY) {
+            setApiKeySet(true);
+        }
       }
     };
     checkKey();
@@ -68,8 +76,12 @@ function App() {
     if (window.aistudio) {
       try {
         await window.aistudio.openSelectKey();
-        // Assume success to mitigate race condition
-        setApiKeySet(true);
+        // Force a small delay or re-check to ensure environment is updated
+        // In some environments, the env var update isn't instantaneous in the React context
+        const hasKey = await window.aistudio.hasSelectedApiKey();
+        if (hasKey) {
+            setApiKeySet(true);
+        }
       } catch (e) {
         console.error("Error selecting API key:", e);
       }
@@ -153,7 +165,8 @@ function App() {
   }
 
   // Get API key from process.env.API_KEY
-  const API_KEY = process.env.API_KEY as string;
+  // Fallback to empty string if undefined to prevent crashing, though logic above should prevent this.
+  const API_KEY = process.env.API_KEY as string || "";
 
   return (
     <div className="App">
