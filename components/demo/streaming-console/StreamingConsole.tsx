@@ -153,14 +153,14 @@ export default function StreamingConsole() {
       if (timeSinceActivity > 12000 && silenceStageRef.current === 0) {
         silenceStageRef.current = 1;
         
-        // Dynamic Context Instruction
+        // Dynamic Context Instruction: Use history + vocalizations
         client.send([{ 
-          text: `[SYSTEM_NOTIFICATION: User has been silent for 12 seconds. ACTION: Re-engage by recalling a specific significant topic/detail we discussed earlier. Use a natural transition like "Actually, before I forget..." or "I was actually contemplating what you said about..." or "You mentioned earlier that...". Do NOT just say "Hello". Make it feel like a spontaneous thought.]` 
+          text: `[SYSTEM_NOTIFICATION: The user is silent. ACTION: [sigh] or [clears throat] gently. Then, look at the last thing they said. Ask a specific follow-up question or clarification about that topic. Do NOT say "Are you there?". Be natural. Example: "[sigh] Wait, balikan natin yung sinabi mo kanina about..."]` 
         }]);
 
         useLogStore.getState().addTurn({
           role: 'system',
-          text: `⚡ System: Silence detected (12s) - Requesting context recall re-engagement`,
+          text: `⚡ System: Silence detected (12s) - Requesting context recall re-engagement with vocalization`,
           isFinal: true
         });
       }
