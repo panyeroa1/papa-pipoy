@@ -102,7 +102,21 @@ export function useLiveApi({
     const onToolCall = (toolCall: LiveServerToolCall) => {
       const functionResponses: any[] = [];
 
-      const LOVE_SONG_TOOLS = ['play_love_song', 'play_song_by_title', 'stop_song', 'get_now_playing', 'set_volume'];
+      // All Papap Pipoy radio tools
+      const RADIO_TOOLS = [
+        // Music
+        'play_love_song', 'play_song_by_title', 'stop_song', 'get_now_playing', 'set_volume',
+        // BGM
+        'play_bgm', 'stop_bgm',
+        // Radio Elements
+        'play_stinger', 'play_station_id', 'play_floater',
+        // Time
+        'get_current_time', 'do_time_check',
+        // Caller
+        'simulate_caller', 'end_caller',
+        // Ads
+        'ad_break'
+      ];
 
       for (const fc of toolCall.functionCalls) {
         // Log the function call trigger
@@ -115,9 +129,9 @@ export function useLiveApi({
           isFinal: true,
         });
 
-        // Handle love song tools specially
+        // Handle radio tools specially
         let response: any;
-        if (LOVE_SONG_TOOLS.includes(fc.name)) {
+        if (RADIO_TOOLS.includes(fc.name)) {
           const result = handleLoveSongToolCall(fc.name, fc.args || {});
           response = { result: result.result };
         } else {
