@@ -31,6 +31,7 @@ export const AVAILABLE_VOICES = ['Zephyr', 'Puck', 'Charon', 'Luna', 'Nova', 'Ko
 
 export const AVAILABLE_STYLES = [
   'Neutral',
+  'Radio DJ',
   'Empathic',
   'Energetic',
   'Serious',
