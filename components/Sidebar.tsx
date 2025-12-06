@@ -148,6 +148,7 @@ export default function Sidebar() {
                   <option value="leo">Morgan (Eburon Estate)</option>
                   <option value="customer-support">Beatrice (Real Estate)</option>
                   <option value="papap-pipoy">Papap Pipoy (Radio DJ)</option>
+                  <option value="papa-aldo">Papa Aldo (Storyteller)</option>
                   <option value="personal-assistant">Personal Assistant</option>
                   <option value="navigation-system">Navigation System</option>
                 </select>

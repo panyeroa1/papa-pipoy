@@ -36,6 +36,15 @@ const welcomeContent: Record<Template, { title: string; description: string; pro
       "Pa-advice naman, situationship lang kami for 2 years.",
     ],
   },
+  'papa-aldo': {
+    title: 'Papa Aldo (Storyteller)',
+    description: 'The immersive, late-night storyteller of "Once Upon a Love Story". Hyper-realistic narration, cinematic visuals, and deep emotional resonance.',
+    prompts: [
+      "Basahin mo yung sulat ni Marie tungkol sa paghihintay.",
+      "Gusto ko marinig yung kwento nung traffic sa EDSA nung nag-break kami.",
+      "Paano kung di naman pala happy ending?",
+    ],
+  },
   'personal-assistant': {
     title: 'Personal Assistant',
     description: 'Manage your schedule, send emails, and set reminders.',
@@ -68,6 +77,7 @@ const WelcomeScreen: React.FC = () => {
             <select value={template} onChange={(e) => setTemplate(e.target.value as Template)} aria-label="Select a template">
               <option value="leo">Morgan (Eburon Estate)</option>
               <option value="papap-pipoy">Papap Pipoy (Orbitz Radio)</option>
+              <option value="papa-aldo">Papa Aldo (Storyteller)</option>
               <option value="customer-support">Beatrice (Real Estate)</option>
               <option value="personal-assistant">Personal Assistant</option>
               <option value="navigation-system">Navigation System</option>
